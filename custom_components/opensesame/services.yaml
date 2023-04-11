@@ -1,0 +1,20 @@
+check_parcel:
+  description: Check if a parcel is available for pickup.
+  fields:
+    number:
+      description: The unique number of the parcel.
+      example: "1234567890"
+
+add_parcel:
+  description: Add a new parcel to the database.
+  fields:
+    number:
+      description: The unique number of the parcel.
+      example: "1234567890"
+
+del_parcel:
+  description: Delete a parcel from the database.
+  fields:
+    number:
+      description: The unique number of the parcel.
+      example: "1234567890"

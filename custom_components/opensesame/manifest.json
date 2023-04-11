@@ -1,0 +1,11 @@
+{
+  "domain": "opensesame",
+  "name": "OpenSesame",
+  "config_flow": true,
+  "documentation": "https://github.com/yourusername/opensesame",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@yourusername"],
+  "iot_class": "local_polling",
+  "version": "0.1.0"
+}
