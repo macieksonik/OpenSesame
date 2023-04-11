@@ -22,7 +22,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     hass.data[DOMAIN][entry.entry_id] = {PARCEL_DATABASE: parcel_database}
 
     async def async_add_parcel(call):
-        parcel_number = call.data["number"]
+        # parcel_number = call.data["number"]
+        parcel_number = call.data.get("number")
         if isinstance(parcel_number, int):
             parcel_number = str(parcel_number)
         parcel_database.add_parcel(parcel_number)
