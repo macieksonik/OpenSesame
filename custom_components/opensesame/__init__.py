@@ -32,8 +32,51 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
             if coordinator:
                 await coordinator.async_request_refresh()
 
+    # async def async_check_parcel(call):
+    #     parcel_number = call.data["number"]
+    #     if isinstance(parcel_number, int):
+    #         parcel_number = str(parcel_number)
+    #     result = parcel_database.check_parcel(parcel_number)
+
+    #     if result:
+    #         for entry_id in hass.data[DOMAIN]:
+    #             coordinator = hass.data[DOMAIN][entry_id].get("coordinator")
+    #             result_sensor = hass.data[DOMAIN][entry_id].get(
+    #                 "result_sensor")  # Add this line
+    #             if coordinator:
+    #                 await coordinator.async_request_refresh()
+    #             if result_sensor:  # Add this block
+    #                 result_sensor.update_state(parcel_number)
+    #     else:
+    #         for entry_id in hass.data[DOMAIN]:
+    #             result_sensor = hass.data[DOMAIN][entry_id].get(
+    #                 "result_sensor")
+    #             if result_sensor:
+    #                 result_sensor.update_state("not-checked")
+    #     return result
+
+    # async def async_check_parcel(call):
+    #     # parcel_number = call.data["number"]
+    #     parcel_number = call.data.get("number")
+
+    #     if isinstance(parcel_number, int):
+    #         parcel_number = str(parcel_number)
+    #     result = parcel_database.check_parcel(parcel_number)
+
+    #     for entry_id in hass.data[DOMAIN]:
+    #         result_sensor = hass.data[DOMAIN][entry_id].get("result_sensor")
+
+    #         if result:
+    #             if result_sensor:
+    #                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #                 result_sensor.update_state(current_time, parcel_number)
+    #         else:
+    #             if result_sensor:
+    #                 result_sensor.update_state(None, None)
+
+    #     return result
+
     async def async_check_parcel(call):
-        # parcel_number = call.data["number"]
         parcel_number = call.data.get("number")
 
         if isinstance(parcel_number, int):
@@ -42,21 +85,24 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
         for entry_id in hass.data[DOMAIN]:
             result_sensor = hass.data[DOMAIN][entry_id].get("result_sensor")
+            coordinator = hass.data[DOMAIN][entry_id].get("coordinator")
+            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             if result:
                 if result_sensor:
-                    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     result_sensor.update_state(current_time, parcel_number)
             else:
-                if result_sensor:
-                    result_sensor.update_state(None, None)
+                if result_sensor and result_sensor.extra_state_attributes:
+                    result_sensor.update_state(current_time, parcel_number)
+
+            if coordinator:
+                await coordinator.async_request_refresh()
 
         return result
 
     async def async_del_parcel(call):
         # parcel_number = call.data["number"]
         parcel_number = call.data.get("number")
-
         if isinstance(parcel_number, int):
             parcel_number = str(parcel_number)
 
