@@ -33,7 +33,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
                 await coordinator.async_request_refresh()
 
     async def async_check_parcel(call):
-        parcel_number = call.data["number"]
+        # parcel_number = call.data["number"]
+        parcel_number = call.data.get("number")
+
         if isinstance(parcel_number, int):
             parcel_number = str(parcel_number)
         result = parcel_database.check_parcel(parcel_number)
@@ -52,7 +54,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         return result
 
     async def async_del_parcel(call):
-        parcel_number = call.data["number"]
+        # parcel_number = call.data["number"]
+        parcel_number = call.data.get("number")
+
         if isinstance(parcel_number, int):
             parcel_number = str(parcel_number)
 
