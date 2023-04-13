@@ -98,7 +98,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
             if coordinator:
                 await coordinator.async_request_refresh()
 
-        return result
+        return {"result": result}
 
     async def async_del_parcel(call):
         # parcel_number = call.data["number"]
