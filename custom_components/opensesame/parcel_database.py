@@ -59,8 +59,8 @@ class ParcelDatabase:
             current_time -
                 datetime.datetime.fromisoformat(parcel_to_check["picked"])
         ).total_seconds() >= 300:
-            parcel_to_check["picked"] = current_time.isoformat()
-            self._save_data()
+            # parcel_to_check["picked"] = current_time.isoformat()
+            # self._save_data()
             return True
 
         return False
