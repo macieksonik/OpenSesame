@@ -98,6 +98,7 @@ class OpenSesameResultSensor(Entity):
     def __init__(self, parcel_database: ParcelDatabase) -> None:
         self._parcel_database = parcel_database
         self._state = "not-checked"
+        self._parcel_number = None  # Add this line
 
     @property
     def name(self) -> str:
